@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <!--App Colors-->
+    <color name="colorPrimary">#FFD600</color>
+    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="colorAccent">#FF263238</color>
+    <color name="colorAccentTans">#90263238</color>
+    <color name="colorText">#212121</color>
+
+    <color name="col_white">#ffffff</color>
+    <color name="col_black">#000000</color>
+    <color name="col_red">#D50000</color>
+    <color name="col_pink">#C51162</color>
+    <color name="col_purple">#AA00FF</color>
+
+    <color name="col_indigo">#FF304FFE</color>
+    <color name="col_blue">#2962FF</color>
+    <color name="col_blue_light">#0091EA</color>
+    <color name="col_cyan">#00B8D4</color>
+    <color name="col_teal">#00BFA5</color>
+    <color name="col_green">#1B5E20</color>
+    <color name="col_green_light">#64DD17</color>
+    <color name="col_yello">#FFD600</color>
+    <color name="col_ambar">#FFAB00</color>
+    <color name="col_orange_deep">#DD2C00</color>
+    <color name="col_brown">#3E2723</color>
+
+    <color name="col_grey_dark">#212121</color>
+    <color name="col_grey_medium">#9E9E9E</color>
+    <color name="col_grey_light">#F5F5F5</color>
+
+    <color name="col_blue_grey_dark">#263238</color>
+    <color name="col_blue_grey_medium">#607D8B</color>
+    <color name="col_blue_grey_medium_trans">#30607D8B</color>
+    <color name="col_blue_grey_light">#B0BEC5</color>
+
+
+
+
 </resources>
