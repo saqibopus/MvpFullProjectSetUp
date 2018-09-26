@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import saqib.com.mvpfullprojectsetup.Helpers.Logs;
@@ -31,6 +32,10 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
 
     private Map<Integer, LinearLayout> position;
 
+    @BindView(R.id.navigation_view_home)
+    LinearLayout navigationViewHome;
+    @BindView(R.id.navigation_view_first)
+    LinearLayout navigationViewFirst;
     public NavigationFragment() {
         // Required empty public constructor
     }
@@ -52,6 +57,8 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
                              Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_navigation, container, false);
         ButterKnife.bind(this, view);
+        navigationViewHome.setOnClickListener(this);
+        navigationViewFirst.setOnClickListener(this);
         return view;
     }
 
@@ -79,11 +86,11 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.navigation_view_home:
-                onNavigationItemClick.onNavigationItem(NavigationConstant.HOME);
+                onNavigationItemClick.onHomeClick();
                 setSelected(R.id.navigation_view_home);
                 return;
             case R.id.navigation_view_first:
-                onNavigationItemClick.onNavigationItem(NavigationConstant.MY_FIRST);
+                onNavigationItemClick.onFirstClick();
                 setSelected(R.id.navigation_view_first);
                 return;
                 default:
@@ -91,7 +98,8 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
     }
 
     public interface OnNavigationItemClick {
-        void onNavigationItem(Integer model);
+        void onHomeClick();
+        void onFirstClick();
     }
 
     /**
