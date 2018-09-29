@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import saqib.com.mvpfullprojectsetup.Modules.FamousPersonalities.Fragment.Model.CategoryModel;
 import saqib.com.mvpfullprojectsetup.R;
 
 /**
@@ -20,12 +21,12 @@ public class CategoryAdapterSpin extends RecyclerView.Adapter<CategoryAdapterSpi
 
     private Context context;
 
-    public CategoryAdapterSpin(Context context, List<String> list) {
+    public CategoryAdapterSpin(Context context, List<CategoryModel> list) {
         this.context = context;
         this.list = list;
     }
 
-    private List<String> list;
+    private List<CategoryModel> list;
 
     @NonNull
     @Override
@@ -37,7 +38,7 @@ public class CategoryAdapterSpin extends RecyclerView.Adapter<CategoryAdapterSpi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.title.setText(list.get(position));
+        holder.title.setText(list.get(position).getCategoryName());
     }
 
     @Override

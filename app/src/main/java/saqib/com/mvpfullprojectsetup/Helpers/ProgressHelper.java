@@ -20,9 +20,10 @@ public class ProgressHelper {
         return progressHelper;
     }
 
-    public void initProgressDilog(Activity activity){
+    public ProgressHelper initProgressDilog(Activity activity){
         progressDialog = new ProgressDialog(activity);
         progressDialog.setCancelable(false);
+        return this;
     }
     public void initProgressDilog(Context context){
         progressDialog = new ProgressDialog(context);
