@@ -33,6 +33,7 @@ public class FilterSheetDilog extends BottomSheetDialogFragment {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     private CategoryAdapterSpin adapterSpin;
+
     public static FilterSheetDilog newInstance() {
         return new FilterSheetDilog();
     }
@@ -57,7 +58,6 @@ public class FilterSheetDilog extends BottomSheetDialogFragment {
         adapterSpin = new CategoryAdapterSpin(getActivity(),getCategoryList());
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
-        // recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(5), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapterSpin);
     }
@@ -79,6 +79,10 @@ public class FilterSheetDilog extends BottomSheetDialogFragment {
             data.add(model);
         }
         return data;
+    }
+
+    public interface FilterSheet{
+        void onFiler();
     }
 
 }

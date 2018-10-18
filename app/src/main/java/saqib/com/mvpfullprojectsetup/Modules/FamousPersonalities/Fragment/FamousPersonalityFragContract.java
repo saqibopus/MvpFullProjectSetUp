@@ -10,10 +10,11 @@ import saqib.com.mvpfullprojectsetup.Modules.FamousPersonalities.Fragment.Model.
 public class FamousPersonalityFragContract {
 
     interface View extends BaseView {
-        void onDataLoaded(boolean status,String message, List<FamousPersonModel> model);
+        void onDataLoaded(boolean status,String message,int maxCount, List<FamousPersonModel> model);
+        void onMoreData(boolean status,String message,int maxCount, List<FamousPersonModel> model);
     }
 
     interface Presenter {
-        void requestList();
+        void requestList(int requestType);
     }
 }

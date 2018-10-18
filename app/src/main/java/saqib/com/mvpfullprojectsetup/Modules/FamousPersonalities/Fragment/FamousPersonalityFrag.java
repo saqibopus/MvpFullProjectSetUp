@@ -14,33 +14,38 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import saqib.com.mvpfullprojectsetup.Helpers.Logs;
 import saqib.com.mvpfullprojectsetup.Helpers.ProgressHelper;
 import saqib.com.mvpfullprojectsetup.Modules.FamousPersonalities.Fragment.Adapters.FamousPersonCategoryAdapter;
-
 import saqib.com.mvpfullprojectsetup.Modules.FamousPersonalities.Fragment.Model.FamousPersonModel;
 import saqib.com.mvpfullprojectsetup.R;
 
 
-public class FamousPersonalityFrag extends Fragment implements FamousPersonalityFragContract.View{
+public class FamousPersonalityFrag extends Fragment implements FamousPersonalityFragContract.View {
 
     @BindView(R.id.bt_category)
     Button btCategory;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-
-    private List<FamousPersonModel> spinList ;
+    private GridLayoutManager mLayoutManager;
+    private List<FamousPersonModel> spinList;
     private FilterSheetDilog filterSheetDilog;
     private FamousPersonalityFragPresenter presenter;
 
     private FamousPersonCategoryAdapter adapter;
     private List<FamousPersonModel> list;
     private ProgressHelper progressHelper;
+
+    private int maxCount = 0;
+    private boolean isLoading = false;
+    int req = 0;
     public FamousPersonalityFrag() {
 
     }
@@ -69,24 +74,22 @@ public class FamousPersonalityFrag extends Fragment implements FamousPersonality
         spinList = new ArrayList<>();
         list = new ArrayList<>();
     }
-    private void initClasses(){
+
+    private void initClasses() {
         progressHelper = ProgressHelper.getInstance().initProgressDilog(getActivity());
-
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(),2);
+        mLayoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(mLayoutManager);
-       // recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(5), true));
+        // recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(5), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-
-        filterSheetDilog =new FilterSheetDilog().newInstance();
-        filterSheetDilog.setCancelable(false);
-        filterSheetDilog.show(getActivity().getSupportFragmentManager(),"Sheet");
-
-
+        recyclerView.addOnScrollListener(recyclerViewOnScrollListener);
+        filterSheetDilog = new FilterSheetDilog().newInstance();
+        filterSheetDilog.setCancelable(true);
+        // filterSheetDilog.show(getActivity().getSupportFragmentManager(),"Sheet");
     }
-    private void beginRequest(){
-        presenter = new FamousPersonalityFragPresenter(getActivity(),this);
-        presenter.requestList();
+
+    private void beginRequest() {
+        presenter = new FamousPersonalityFragPresenter(getActivity(), this);
+        presenter.requestList(FamousPersonalityFragPresenter.REQUEST_TYPE_FIRST);
     }
 
     @Override
@@ -106,10 +109,9 @@ public class FamousPersonalityFrag extends Fragment implements FamousPersonality
     }
 
     @OnClick(R.id.bt_category)
-    void onButtonCategory(){
-        filterSheetDilog.show(getActivity().getSupportFragmentManager(),"fadaljanbksak");
+    void onButtonCategory() {
+        filterSheetDilog.show(getActivity().getSupportFragmentManager(), "fadaljanbksak");
     }
-
 
     @Override
     public void showToast() {
@@ -125,23 +127,65 @@ public class FamousPersonalityFrag extends Fragment implements FamousPersonality
     }
 
     @Override
-    public void onDataLoaded(boolean status, String message, List<FamousPersonModel> model) {
-        if(!status){
-            Logs.tS(getActivity(),message);
+    public void onDataLoaded(boolean status, String message, int maxCount, List<FamousPersonModel> model) {
+        if (!status) {
+            Logs.tS(getActivity(), message);
             return;
         }
-        adapter = new FamousPersonCategoryAdapter(getActivity(),model);
+        this.maxCount = maxCount;
+        list.addAll(model);
+        Logs.p("onDataLoaded :"+ list.size());
+        adapter = new FamousPersonCategoryAdapter(getActivity(), list);
         recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
 
-        //list = model;
-        //adapter.addMore(list);
-        //adapter.notifyDataSetChanged();
-        adapter.notifyManually();
-        Logs.p("sie : "+list.size());
+    @Override
+    public void onMoreData(boolean status, String message, int maxCount, List<FamousPersonModel> model) {
+        if (!status) {
+            Logs.tS(getActivity(), message);
+            return;
+        }
+        this.maxCount = maxCount;
+        Logs.p("onMoreData :"+ list.size());
+        list.addAll(model);
+        adapter.notifyDataSetChanged();
     }
 
     private int dpToPx(int dp) {
         Resources r = getResources();
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
+
+    private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            int visibleItemCount = mLayoutManager.getChildCount();
+            int totalItemCount = mLayoutManager.getItemCount();
+            int firstVisibleItemPosition = mLayoutManager.findFirstVisibleItemPosition();
+
+            Logs.p("visibleItemCount : " + mLayoutManager.getChildCount());
+            Logs.p("totalItemCount : " + mLayoutManager.getItemCount());
+            Logs.p("firstVisibleItemPosition : " + mLayoutManager.findFirstVisibleItemPosition());
+            Logs.p("maxCount : " + maxCount);
+
+            if (!isLoading) {
+                if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+                        && firstVisibleItemPosition >= 0) {
+                    Logs.p("req : "+req);
+                    req++;
+                    if(maxCount > totalItemCount){
+                        presenter.requestList(FamousPersonalityFragPresenter.REQUEST_TYPE_MORE);
+                    }
+
+                }
+            }
+        }
+    };
 }
