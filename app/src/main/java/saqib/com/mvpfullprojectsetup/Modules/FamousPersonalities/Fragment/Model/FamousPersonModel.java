@@ -6,17 +6,31 @@ package saqib.com.mvpfullprojectsetup.Modules.FamousPersonalities.Fragment.Model
 
 public class FamousPersonModel {
 
-    private long id;
-    private String name;
-    private String category;
-    private String image;
+    private boolean isAd;
 
-    public FamousPersonModel(long id, String name, String category, String image) {
+    public boolean isAd() {
+        return isAd;
+    }
+
+    public void setAd(boolean ad) {
+        isAd = ad;
+    }
+
+    public FamousPersonModel(boolean isAd, long id, String name, String category, String image) {
+
+        this.isAd = isAd;
         this.id = id;
         this.name = name;
         this.category = category;
         this.image = image;
     }
+
+    private long id;
+    private String name;
+    private String category;
+    private String image;
+
+
 
     public long getId() {
         return id;

@@ -15,6 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdLoader;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.formats.UnifiedNativeAd;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +30,7 @@ import butterknife.OnClick;
 import saqib.com.mvpfullprojectsetup.Helpers.Logs;
 import saqib.com.mvpfullprojectsetup.Helpers.ProgressHelper;
 import saqib.com.mvpfullprojectsetup.Modules.FamousPersonalities.Fragment.Adapters.FamousPersonCategoryAdapter;
+import saqib.com.mvpfullprojectsetup.Modules.FamousPersonalities.Fragment.Adapters.FamousPersonCategoryAdapterAds;
 import saqib.com.mvpfullprojectsetup.Modules.FamousPersonalities.Fragment.Model.FamousPersonModel;
 import saqib.com.mvpfullprojectsetup.R;
 
@@ -40,12 +47,23 @@ public class FamousPersonalityFrag extends Fragment implements FamousPersonality
     private FamousPersonalityFragPresenter presenter;
 
     private FamousPersonCategoryAdapter adapter;
-    private List<FamousPersonModel> list;
+    private FamousPersonCategoryAdapterAds adapterAds;
+    private List<Object> list;
     private ProgressHelper progressHelper;
 
     private int maxCount = 0;
     private boolean isLoading = false;
     int req = 0;
+
+    // The number of native ads to load.
+    public static final int NUMBER_OF_ADS = 5;
+    // The AdLoader used to load ads.
+    private AdLoader adLoader;
+    // List of native ads that have been successfully loaded.
+    private List<UnifiedNativeAd> mNativeAds = new ArrayList<>();
+
+
+
     public FamousPersonalityFrag() {
 
     }
@@ -73,6 +91,7 @@ public class FamousPersonalityFrag extends Fragment implements FamousPersonality
     private void initView() {
         spinList = new ArrayList<>();
         list = new ArrayList<>();
+        MobileAds.initialize(getActivity(), "ca-app-pub-3940256099942544~3347511713");
     }
 
     private void initClasses() {
@@ -135,9 +154,15 @@ public class FamousPersonalityFrag extends Fragment implements FamousPersonality
         this.maxCount = maxCount;
         list.addAll(model);
         Logs.p("onDataLoaded :"+ list.size());
-        adapter = new FamousPersonCategoryAdapter(getActivity(), list);
-        recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        //adapter = new FamousPersonCategoryAdapter(getActivity(), list);
+        //recyclerView.setAdapter(adapter);
+        //adapter.notifyDataSetChanged();
+
+        adapterAds = new FamousPersonCategoryAdapterAds(getActivity(),list);
+        recyclerView.setAdapter(adapterAds);
+        adapterAds.notifyDataSetChanged();
+        loadNativeAds();
+        adapterAds.notifyDataSetChanged();
     }
 
     @Override
@@ -149,7 +174,8 @@ public class FamousPersonalityFrag extends Fragment implements FamousPersonality
         this.maxCount = maxCount;
         Logs.p("onMoreData :"+ list.size());
         list.addAll(model);
-        adapter.notifyDataSetChanged();
+        //adapter.notifyDataSetChanged();
+        adapterAds.notifyDataSetChanged();
     }
 
     private int dpToPx(int dp) {
@@ -188,4 +214,50 @@ public class FamousPersonalityFrag extends Fragment implements FamousPersonality
             }
         }
     };
+    private void loadNativeAds() {
+
+        AdLoader.Builder builder = new AdLoader.Builder(getActivity(), "ca-app-pub-3940256099942544/2247696110");
+        adLoader = builder.forUnifiedNativeAd(
+                new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
+                    @Override
+                    public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
+                        Logs.p("onUnifiedNativeAdLoaded");
+                        // A native ad loaded successfully, check if the ad loader has finished loading
+                        // and if so, insert the ads into the list.
+                        mNativeAds.add(unifiedNativeAd);
+                        if (!adLoader.isLoading()) {
+                            insertAdsInMenuItems();
+                        }
+                    }
+                }).withAdListener(
+                new AdListener() {
+                    @Override
+                    public void onAdFailedToLoad(int errorCode) {
+                        Logs.p("onAdFailedToLoad : error code : "+errorCode);
+                        // A native ad failed to load, check if the ad loader has finished loading
+                        // and if so, insert the ads into the list.
+                        Logs.p("MainActivity"+ "The previous native ad failed to load. Attempting to"
+                                + " load another.");
+                        if (!adLoader.isLoading()) {
+                            insertAdsInMenuItems();
+                        }
+                    }
+                }).build();
+
+        // Load the Native ads.
+        adLoader.loadAds(new AdRequest.Builder().build(), NUMBER_OF_ADS);
+    }
+    private void insertAdsInMenuItems() {
+        if (mNativeAds.size() <= 0) {
+            return;
+        }
+        Logs.p("onAdFailedToLoad : insertAdsInMenuItems : mNativeAds size: "+mNativeAds.size());
+        int offset = (list.size() / mNativeAds.size()) + 1;
+        int index = 0;
+        for (UnifiedNativeAd ad : mNativeAds) {
+            list.add(index, ad);
+            index = index + offset;
+        }
+    }
+
 }

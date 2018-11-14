@@ -54,28 +54,28 @@ public class FamousPersonalityFragPresenter implements FamousPersonalityFragCont
 
     private List<FamousPersonModel> getCateGory() {
         List<FamousPersonModel> data = new ArrayList<>();
-        data.add(new FamousPersonModel(123,"one","gigi","https://icon2.kisspng.com/20180204/vsw/kisspng-indian-independence-movement-khatkar-kalan-punjab-bhagat-singh-png-image-5a76b4369ea7c7.6893577515177288226499.jpg"));
-        data.add(new FamousPersonModel(456,"two","gigi1","http://www.pngmart.com/files/4/Bhagat-Singh-PNG-Clipart.png"));
-        data.add(new FamousPersonModel(123,"three","gigi2","http://www.queness.com/resources/images/png/apple_ex.png"));
-        data.add(new FamousPersonModel(123,"one","gigi","http://www.queness.com/resources/images/png/apple_ex.png"));
-        data.add(new FamousPersonModel(456,"two","gigi1","http://www.queness.com/resources/images/png/apple_ex.png"));
-        data.add(new FamousPersonModel(123,"three","gigi2","http://www.queness.com/resources/images/png/apple_ex.png"));
-        data.add(new FamousPersonModel(123,"one","gigi","https://icon2.kisspng.com/20180204/vsw/kisspng-indian-independence-movement-khatkar-kalan-punjab-bhagat-singh-png-image-5a76b4369ea7c7.6893577515177288226499.jpg"));
-        data.add(new FamousPersonModel(456,"two","gigi1","http://www.pngmart.com/files/4/Bhagat-Singh-PNG-Clipart.png"));
-        data.add(new FamousPersonModel(123,"one","gigi","http://www.queness.com/resources/images/png/apple_ex.png"));
-        data.add(new FamousPersonModel(456,"two","gigi1","http://www.queness.com/resources/images/png/apple_ex.png"));
-        data.add(new FamousPersonModel(123,"three","gigi2","http://www.queness.com/resources/images/png/apple_ex.png"));
-        data.add(new FamousPersonModel(456,"two","gigi1","http://www.pngmart.com/files/4/Bhagat-Singh-PNG-Clipart.png"));
-        data.add(new FamousPersonModel(123,"one","gigi","http://www.queness.com/resources/images/png/apple_ex.png"));
-        data.add(new FamousPersonModel(456,"two","gigi1","http://www.queness.com/resources/images/png/apple_ex.png"));
-        data.add(new FamousPersonModel(123,"three","gigi2","http://www.queness.com/resources/images/png/apple_ex.png"));
+        data.add(new FamousPersonModel(true,123,"one","gigi","https://icon2.kisspng.com/20180204/vsw/kisspng-indian-independence-movement-khatkar-kalan-punjab-bhagat-singh-png-image-5a76b4369ea7c7.6893577515177288226499.jpg"));
+        data.add(new FamousPersonModel(false,456,"two","gigi1","http://www.pngmart.com/files/4/Bhagat-Singh-PNG-Clipart.png"));
+        data.add(new FamousPersonModel(false,123,"three","gigi2","http://www.queness.com/resources/images/png/apple_ex.png"));
+        data.add(new FamousPersonModel(false,123,"one","gigi","http://www.queness.com/resources/images/png/apple_ex.png"));
+        data.add(new FamousPersonModel(false,456,"two","gigi1","http://www.queness.com/resources/images/png/apple_ex.png"));
+        data.add(new FamousPersonModel(true,123,"three","gigi2","http://www.queness.com/resources/images/png/apple_ex.png"));
+        data.add(new FamousPersonModel(false,123,"one","gigi","https://icon2.kisspng.com/20180204/vsw/kisspng-indian-independence-movement-khatkar-kalan-punjab-bhagat-singh-png-image-5a76b4369ea7c7.6893577515177288226499.jpg"));
+        data.add(new FamousPersonModel(false,456,"two","gigi1","http://www.pngmart.com/files/4/Bhagat-Singh-PNG-Clipart.png"));
+        data.add(new FamousPersonModel(false,123,"one","gigi","http://www.queness.com/resources/images/png/apple_ex.png"));
+        data.add(new FamousPersonModel(false,456,"two","gigi1","http://www.queness.com/resources/images/png/apple_ex.png"));
+        data.add(new FamousPersonModel(false,123,"three","gigi2","http://www.queness.com/resources/images/png/apple_ex.png"));
+        data.add(new FamousPersonModel(false,456,"two","gigi1","http://www.pngmart.com/files/4/Bhagat-Singh-PNG-Clipart.png"));
+        data.add(new FamousPersonModel(false,123,"one","gigi","http://www.queness.com/resources/images/png/apple_ex.png"));
+        data.add(new FamousPersonModel(false,456,"two","gigi1","http://www.queness.com/resources/images/png/apple_ex.png"));
+        data.add(new FamousPersonModel(true,123,"three","gigi2","http://www.queness.com/resources/images/png/apple_ex.png"));
         return data;
     }
     private List<FamousPersonModel> getMoreCateGory() {
         List<FamousPersonModel> data = new ArrayList<>();
-        data.add(new FamousPersonModel(123,"one_more","gigi","https://icon2.kisspng.com/20180204/vsw/kisspng-indian-independence-movement-khatkar-kalan-punjab-bhagat-singh-png-image-5a76b4369ea7c7.6893577515177288226499.jpg"));
-        data.add(new FamousPersonModel(456,"two_more","gigi1","http://www.pngmart.com/files/4/Bhagat-Singh-PNG-Clipart.png"));
-        data.add(new FamousPersonModel(456,"three_more","gigi1","http://www.pngmart.com/files/4/Bhagat-Singh-PNG-Clipart.png"));
+        data.add(new FamousPersonModel(false,123,"one_more","gigi","https://icon2.kisspng.com/20180204/vsw/kisspng-indian-independence-movement-khatkar-kalan-punjab-bhagat-singh-png-image-5a76b4369ea7c7.6893577515177288226499.jpg"));
+        data.add(new FamousPersonModel(false,456,"two_more","gigi1","http://www.pngmart.com/files/4/Bhagat-Singh-PNG-Clipart.png"));
+        data.add(new FamousPersonModel(false,456,"three_more","gigi1","http://www.pngmart.com/files/4/Bhagat-Singh-PNG-Clipart.png"));
         return data;
     }
 
