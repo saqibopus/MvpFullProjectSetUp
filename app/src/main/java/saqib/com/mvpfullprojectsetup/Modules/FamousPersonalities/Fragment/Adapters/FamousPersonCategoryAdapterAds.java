@@ -28,9 +28,9 @@ import saqib.com.mvpfullprojectsetup.R;
  */
 
 public class FamousPersonCategoryAdapterAds extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
     // A menu item view type.
     private static final int TYPE_VIEW = 0;
-
     // The unified native ad view type.
     private static final int TYPE_AD = 1;
 

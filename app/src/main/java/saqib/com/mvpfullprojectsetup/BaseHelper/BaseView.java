@@ -5,6 +5,5 @@ package saqib.com.mvpfullprojectsetup.BaseHelper;
  */
 
 public interface BaseView {
-    void showToast();
     void showProgress(boolean status);
 }

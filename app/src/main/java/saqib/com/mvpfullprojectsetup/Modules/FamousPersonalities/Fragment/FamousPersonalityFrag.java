@@ -45,7 +45,6 @@ public class FamousPersonalityFrag extends Fragment implements FamousPersonality
     private List<FamousPersonModel> spinList;
     private FilterSheetDilog filterSheetDilog;
     private FamousPersonalityFragPresenter presenter;
-
     private FamousPersonCategoryAdapter adapter;
     private FamousPersonCategoryAdapterAds adapterAds;
     private List<Object> list;
@@ -129,12 +128,7 @@ public class FamousPersonalityFrag extends Fragment implements FamousPersonality
 
     @OnClick(R.id.bt_category)
     void onButtonCategory() {
-        filterSheetDilog.show(getActivity().getSupportFragmentManager(), "fadaljanbksak");
-    }
-
-    @Override
-    public void showToast() {
-
+        filterSheetDilog.show(getActivity().getSupportFragmentManager(), "Demo");
     }
 
     @Override
@@ -161,7 +155,7 @@ public class FamousPersonalityFrag extends Fragment implements FamousPersonality
         adapterAds = new FamousPersonCategoryAdapterAds(getActivity(),list);
         recyclerView.setAdapter(adapterAds);
         adapterAds.notifyDataSetChanged();
-        loadNativeAds();
+        //loadNativeAds();
         adapterAds.notifyDataSetChanged();
     }
 

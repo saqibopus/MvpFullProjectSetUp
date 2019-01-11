@@ -2,10 +2,9 @@ package saqib.com.mvpfullprojectsetup;
 
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
@@ -18,9 +17,8 @@ import saqib.com.mvpfullprojectsetup.BaseHelper.BaseActivity;
 import saqib.com.mvpfullprojectsetup.Helpers.Logs;
 import saqib.com.mvpfullprojectsetup.Modules.FamousPersonalities.Fragment.FamousPersonalityFrag;
 import saqib.com.mvpfullprojectsetup.Modules.Navigation.NavigationFragment;
-import saqib.com.mvpfullprojectsetup.Modules.Navigation.NavigationModel;
 
-public class MainActivity extends BaseActivity implements NavigationFragment.OnNavigationItemClick{
+public class MainActivity extends BaseActivity implements NavigationFragment.OnNavigationItemClick {
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -58,10 +56,10 @@ public class MainActivity extends BaseActivity implements NavigationFragment.OnN
         });
     }
 
-    private void setUpDrawerFragment(){
+    private void setUpDrawerFragment() {
         NavigationFragment navigationFragment = new NavigationFragment().setListner(this);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.home_drawer_fragment,navigationFragment).commit();
+        ft.add(R.id.home_drawer_fragment, navigationFragment).commit();
     }
 
     private void openDrawer() {
@@ -75,22 +73,28 @@ public class MainActivity extends BaseActivity implements NavigationFragment.OnN
     }
 
     private void closeDrawer() {
-        if (homeDrawer != null) {
-            homeDrawer.closeDrawer(Gravity.LEFT);
-        }
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                if (homeDrawer != null) {
+                    homeDrawer.closeDrawer(Gravity.LEFT);
+                }
+            }
+        });
+
     }
 
 
     @Override
     public void onHomeClick() {
         closeDrawer();
-        Logs.tL(MainActivity.this,"Home click");
-        startFragment(R.id.home_drawer_main,new FamousPersonalityFrag());
+        Logs.tL(MainActivity.this, "Home click");
+        startFragment(R.id.home_drawer_main, new FamousPersonalityFrag());
     }
 
     @Override
     public void onFirstClick() {
         closeDrawer();
-        Logs.tL(MainActivity.this,"First click");
+        Logs.tL(MainActivity.this, "First click");
     }
 }
