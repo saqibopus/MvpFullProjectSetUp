@@ -86,11 +86,11 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.navigation_view_home:
-                onNavigationItemClick.onHomeClick();
+                onNavigationItemClick.onFamousePersonalityClick();
                 setSelected(R.id.navigation_view_home);
                 return;
             case R.id.navigation_view_first:
-                onNavigationItemClick.onFirstClick();
+                onNavigationItemClick.onBatchListClick();
                 setSelected(R.id.navigation_view_first);
                 return;
                 default:
@@ -98,8 +98,8 @@ public class NavigationFragment extends Fragment implements View.OnClickListener
     }
 
     public interface OnNavigationItemClick {
-        void onHomeClick();
-        void onFirstClick();
+        void onFamousePersonalityClick();
+        void onBatchListClick();
     }
 
     /**

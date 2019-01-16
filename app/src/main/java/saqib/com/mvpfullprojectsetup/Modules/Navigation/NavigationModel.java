@@ -1,7 +1,7 @@
 package saqib.com.mvpfullprojectsetup.Modules.Navigation;
 
 /**
- * Created by emxcel on 25/9/18.
+
  */
 
 public class NavigationModel {

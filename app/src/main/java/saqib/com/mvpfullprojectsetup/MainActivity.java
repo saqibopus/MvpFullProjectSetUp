@@ -15,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import saqib.com.mvpfullprojectsetup.BaseHelper.BaseActivity;
 import saqib.com.mvpfullprojectsetup.Helpers.Logs;
+import saqib.com.mvpfullprojectsetup.Modules.BatchList.BatchListFragment;
 import saqib.com.mvpfullprojectsetup.Modules.FamousPersonalities.Fragment.FamousPersonalityFrag;
 import saqib.com.mvpfullprojectsetup.Modules.Navigation.NavigationFragment;
 
@@ -41,7 +42,7 @@ public class MainActivity extends BaseActivity implements NavigationFragment.OnN
 
     private void setUpToolbar(Toolbar toolbar) {
         setSupportActionBar(toolbar);
-        toolbarHomeTitle.setText("Home Coming");
+        setToolbarTitle("Home");
         toolbarHomeImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,16 +86,23 @@ public class MainActivity extends BaseActivity implements NavigationFragment.OnN
     }
 
 
+
+
     @Override
-    public void onHomeClick() {
+    public void onFamousePersonalityClick() {
         closeDrawer();
-        Logs.tL(MainActivity.this, "Home click");
-        startFragment(R.id.home_drawer_main, new FamousPersonalityFrag());
+        setToolbarTitle("Famouse Personality");
+        startFragment(R.id.home_drawer_main, new FamousPersonalityFrag().newInstance());
     }
 
     @Override
-    public void onFirstClick() {
+    public void onBatchListClick() {
         closeDrawer();
-        Logs.tL(MainActivity.this, "First click");
+        setToolbarTitle("Question Batch");
+        startFragment(R.id.home_drawer_main,new BatchListFragment().newInstance());
+    }
+
+    private void setToolbarTitle(String title){
+        toolbarHomeTitle.setText(title);
     }
 }

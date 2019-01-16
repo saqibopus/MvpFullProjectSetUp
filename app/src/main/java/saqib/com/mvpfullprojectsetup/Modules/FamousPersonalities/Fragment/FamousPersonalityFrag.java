@@ -53,15 +53,9 @@ public class FamousPersonalityFrag extends Fragment implements FamousPersonality
     private int maxCount = 0;
     private boolean isLoading = false;
     int req = 0;
-
-    // The number of native ads to load.
     public static final int NUMBER_OF_ADS = 5;
-    // The AdLoader used to load ads.
     private AdLoader adLoader;
-    // List of native ads that have been successfully loaded.
     private List<UnifiedNativeAd> mNativeAds = new ArrayList<>();
-
-
 
     public FamousPersonalityFrag() {
 

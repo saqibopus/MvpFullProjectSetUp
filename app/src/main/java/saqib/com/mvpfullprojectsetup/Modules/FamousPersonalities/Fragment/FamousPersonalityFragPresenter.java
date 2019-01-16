@@ -4,16 +4,22 @@ import android.content.Context;
 import android.os.Handler;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import io.reactivex.functions.Consumer;
+import io.reactivex.observers.DefaultObserver;
 import saqib.com.mvpfullprojectsetup.Modules.FamousPersonalities.Fragment.Model.FamousPersonModel;
+import saqib.com.mvpfullprojectsetup.Networking.BaseObervables;
+import saqib.com.mvpfullprojectsetup.Networking.Network;
 
 
 /**
  * Created by data.
  */
 
-public class FamousPersonalityFragPresenter implements FamousPersonalityFragContract.Presenter {
+public class FamousPersonalityFragPresenter extends BaseObervables implements FamousPersonalityFragContract.Presenter {
     private Context context;
     private FamousPersonalityFragContract.View presenter;
     public static final int REQUEST_TYPE_FIRST=0;
@@ -49,7 +55,23 @@ public class FamousPersonalityFragPresenter implements FamousPersonalityFragCont
         }else {
 
         }
+        Map<String, String> map = new HashMap<>();
+        callBatchList(map).subscribeWith(new DefaultObserver<String>() {
+            @Override
+            public void onNext(String s) {
 
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 
     private List<FamousPersonModel> getCateGory() {
